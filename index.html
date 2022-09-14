@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <canvas id="myCanvas" width="1000px" height="600px" style="border:3px solid red;">
+</body>
+
+<script>
+
+    class Circle {
+        constructor(x, y, r) {
+            this.x = x;
+            this.y = y;
+            this.radius = r;
+            this.status = true;
+            this.count = 0;
+            // this.speed = Math.random() * 30;
+            this.canvas = document.getElementById("myCanvas");
+            this.ctx = this.canvas.getContext("2d");
+        }
+
+        getRandomHex() {
+            return Math.floor(Math.random() * 255);
+        }
+
+        getRandomColor() {
+            let red = this.getRandomHex();
+            let green = this.getRandomHex();
+            let yellow = this.getRandomHex();
+            return "rgb(" + red + "," + yellow + "," + green + ")";
+        }
+
+        draw_Circle() {
+            this.ctx.beginPath();
+            this.ctx.fillStyle = this.getRandomColor();
+            this.ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
+            this.ctx.fill();
+        }
+
+        clear() {
+            this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        }
+
+        move() {
+            if (this.status) {
+                this.clear();
+                this.x += Math.floor(Math.random() * 50);
+                this.y += Math.floor(Math.random() * 50);
+                this.draw_Circle();
+                if ((this.x + this.radius) > this.canvas.width || (this.y + this.radius > this.canvas.height)) {
+                    this.status = false;
+                }
+            } else {
+                this.clear();
+                this.x -= 10
+                this.y -= 20
+                // if()
+                this.draw_Circle();
+                if ((this.x - this.radius) < 0 || (this.y - this.radius < 0)) {
+                    this.status = true;
+                }
+            }
+
+        }
+
+        getMultiCircle() {
+
+            for (let i = 0; i < 1; i++) {
+
+                if (this.count < 20) {
+                    let time = setInterval(() => {
+                        this.move();
+                        this.count += 1
+                        if (count == 20) {
+                            clearInterval(time)
+                        }
+                    }, 1000);
+                }
+            }
+        }
+    }
+
+    let circle = new Circle(100, 200, 50);
+
+    setInterval(() => {
+        circle.getMultiCircle()
+    }, 100);
+
+</script>
+
+</html>
